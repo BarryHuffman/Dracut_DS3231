@@ -13,16 +13,45 @@
    License along with this library; if not, write to the Free Software
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA */
 
+#include <stdio.h>
+#include <string.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 #include "rpi-lcd.h"
 
 int
-main ()
+main (int argc, char **argv)
 {
   int dev;
+  int c = 1;
 
-  dev = lcdSetup(0x27, 1);
+  if (argc > 1 && strcmp (argv[1], "init") == 0)
+    {
+      dev = lcdSetup(0x27, 1, 1);
+      c++;
+    }
+  else
+    dev = lcdSetup(0x27, 1, 0);
+
+  if (dev < 0) {
+    fprintf (stderr, "ERROR: couldn't open /dev/i2c-%i: %m\n", 1);
+    exit (1);
+  }
+
+  for (int i = c; i < argc; i++)
+    {
+      if (strncasecmp ("str=", argv[i], 4) == 0)
+	{
+	  lcdWriteString (dev, 0, &argv[i][4]);
+	}
+      else if (strcasecmp ("clear", argv[i]) == 0)
+	lcdClear (dev);
+      else if (strcasecmp ("display=on", argv[i]) == 0)
+	lcdDisplayOn (dev);
+      else if (strcasecmp ("display=off", argv[i]) == 0)
+	lcdDisplayOff (dev);
+    }
 
 #if 0
   lcdClear (dev);
