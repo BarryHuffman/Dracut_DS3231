@@ -59,11 +59,27 @@
 #define LCD_BACKLIGHT   0x08
 #define LCD_NOBACKLIGHT 0x00
 
-int lcdSetup (uint8_t address, uint8_t busid);
+/* opens a file handle to the LCD i2c device. busid is the
+   i2c bus, on Rasperry Pi 2 and newer normally 1, and the
+   address is normally "0x27". init is either 0 or 1, with
+   1 the LCD device is initialized, with 0 the device get's
+   only opened. Normally "1" is right argument. */
+int lcdSetup (uint8_t address, uint8_t busid, int init);
+
+/* Close the file handle to the device */
 void lcdClose (int device);
+
+/* Clear the device. The "cursor" is not moved. */
 void lcdClear (int device);
+
+/* Write a string to the LCD device. The line can be in the range
+   from 0-4, 0 means the new text is written from the current position,
+   1-4 means it's written in that row. '\n' is converted to the correct
+   control sequence. */
+void lcdWriteString (int device, int line, char *str);
+
 void lcdDisplayOff (int device);
 void lcdDisplayOn (int device);
-void lcdWriteString (int device, int line, char *str);
+
 
 #endif  /* __RPI_LCD_H__ */

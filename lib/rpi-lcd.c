@@ -13,6 +13,7 @@
    License along with this library; if not, write to the Free Software
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA */
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -89,7 +90,7 @@ lcdClear (int device)
 }
 
 int
-lcdSetup (uint8_t address, uint8_t busnum)
+lcdSetup (uint8_t address, uint8_t busnum, int init)
 {
   char *devname;
   int device;
@@ -102,8 +103,9 @@ lcdSetup (uint8_t address, uint8_t busnum)
 
   if ((device = open (devname, O_RDWR)) < 0)
     {
-      perror ("open() failed");
+      int save_errno = errno;
       free (devname);
+      errno = save_errno;
       return -1;
     }
   free (devname);
@@ -111,25 +113,31 @@ lcdSetup (uint8_t address, uint8_t busnum)
   /* Query if i2c funcs are available */
   if (ioctl (device, I2C_FUNCS, &funcs) < 0)
     {
-      perror ("ioctl() I2C_FUNCS failed");
+      int save_errno = errno;
       close (device);
+      errno = save_errno;
       return -1;
     }
 
   if (ioctl (device, I2C_SLAVE, address) < 0)
     {
-      perror ("i2c set address failed");
+      int save_errno = errno;
       close (device);
+      errno = save_errno;
       return -1;
     }
 
-  i2c_write (device, 0x33); /* 110011 Initialise */
-  i2c_write (device, 0x32); /* 110010 Initialise */
-  i2c_write (device, LCD_ENTRYMODESET | LCD_ENTRYLEFT);
-  lcdDisplayOn (device); /* Display On, Cursor Off, Blink Off */
-  i2c_write (device,
-	     LCD_FUNCTIONSET | LCD_2LINE | LCD_5x8DOTS | LCD_4BITMODE);
-  lcdClear (device);
+  if (init)
+    {
+      i2c_write (device, 0x33); /* 110011 Initialise */
+      i2c_write (device, 0x32); /* 110010 Initialise */
+      i2c_write (device, LCD_ENTRYMODESET | LCD_ENTRYLEFT);
+      lcdDisplayOn (device); /* Display On, Cursor Off, Blink Off */
+      i2c_write (device,
+		 LCD_FUNCTIONSET | LCD_2LINE | LCD_5x8DOTS | LCD_4BITMODE);
+      lcdClear (device);
+    }
+
   usleep (E_DELAY);
 
   return device;
