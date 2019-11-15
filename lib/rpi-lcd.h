@@ -37,7 +37,7 @@
 #define LCD_DISPLAYON   0x0C
 #define LCD_DISPLAYOFF 	0x08
 #define LCD_CURSORON    0x0E
-#define LCD_CURSOROFF   0x00
+#define LCD_CURSOROFF   0x08
 #define LCD_BLINKON     0x01
 #define LCD_BLINKOFF    0x00
 
@@ -69,7 +69,7 @@ int lcdSetup (uint8_t address, uint8_t busid, int init);
 /* Close the file handle to the device */
 void lcdClose (int device);
 
-/* Clear the device. The "cursor" is not moved. */
+/* Clear the device. Cursor is moved to first line, first position */
 void lcdClear (int device);
 
 /* Write a string to the LCD device. The line can be in the range
@@ -77,6 +77,10 @@ void lcdClear (int device);
    1-4 means it's written in that row. '\n' is converted to the correct
    control sequence. */
 void lcdWriteString (int device, int line, char *str);
+
+void lcdCursorOn (int device);
+void lcdCursorOff (int device);
+void lcdCursorBlink (int device);
 
 void lcdDisplayOff (int device);
 void lcdDisplayOn (int device);

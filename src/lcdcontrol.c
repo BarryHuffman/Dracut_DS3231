@@ -51,17 +51,18 @@ main (int argc, char **argv)
 	lcdDisplayOn (dev);
       else if (strcasecmp ("display=off", argv[i]) == 0)
 	lcdDisplayOff (dev);
+      else if (strcasecmp ("cursor=on", argv[i]) == 0)
+	lcdCursorOn (dev);
+      else if (strcasecmp ("cursor=off", argv[i]) == 0)
+	lcdCursorOff (dev);
+      else if (strcasecmp ("cursor=blink", argv[i]) == 0)
+	lcdCursorBlink (dev);
+      else
+	{
+	  fprintf (stderr, "Error: unknown argument: '%s'\n", argv[i]);
+	  exit (1);
+	}
     }
-
-#if 0
-  lcdClear (dev);
-
-  lcdDisplayOff (dev);
-  sleep (10);
-  lcdDisplayOn (dev);
-
-  lcdWriteString (dev, 1, "Hello1\nHello2");
-#endif
 
   lcdClose(dev);
 

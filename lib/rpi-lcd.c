@@ -56,37 +56,56 @@ i2c_strobe (int device, uint8_t data, int backlight)
 }
 
 static void
-i2c_write_mode (int device, uint8_t data, int mode)
+i2c_write_mode (int device, uint8_t data, int mode, int backlight)
 {
-  i2c_strobe (device, mode | (data & 0xF0), LCD_BACKLIGHT);
-  i2c_strobe (device, mode | ((data << 4) & 0xF0), LCD_BACKLIGHT);
+  i2c_strobe (device, mode | (data & 0xF0), backlight);
+  i2c_strobe (device, mode | ((data << 4) & 0xF0), backlight);
 }
 
 static void
 i2c_write (int device, uint8_t data)
 {
-  i2c_write_mode (device, data, 0);
+  i2c_write_mode (device, data, 0, LCD_BACKLIGHT);
 }
 
 /* Public functions */
 
 void
-lcdDisplayOn(int device)
+lcdDisplayOn (int device)
 {
   i2c_write (device, LCD_DISPLAYON);
 }
 
 void
-lcdDisplayOff(int device)
+lcdDisplayOff (int device)
 {
-  i2c_write (device, LCD_DISPLAYOFF);
+  i2c_write_mode (device, LCD_DISPLAYOFF, 0, LCD_NOBACKLIGHT);
+}
+
+void
+lcdCursorOn (int device)
+{
+  i2c_write (device, LCD_CURSORON);
+}
+
+void
+lcdCursorBlink (int device)
+{
+  i2c_write (device, LCD_CURSORON|LCD_BLINKON);
+}
+
+void
+lcdCursorOff (int device)
+{
+  /* Make sure to disable only cursor but not display */
+  i2c_write (device, LCD_CURSOROFF|LCD_DISPLAYON);
 }
 
 void
 lcdClear (int device)
 {
   i2c_write (device, LCD_CLEARDISPLAY);
-  /* i2c_write (device, LCD_RETURNHOME); */
+  i2c_write (device, LCD_RETURNHOME);
 }
 
 int
@@ -180,7 +199,7 @@ lcdWriteString (int device, int line, char *str)
       if (str[i] == '\n')
 	i2c_write (device, 0xC0);
       else
-	i2c_write_mode (device, str[i], Rs);
+	i2c_write_mode (device, str[i], Rs, LCD_BACKLIGHT);
       i++;
     }
 }
