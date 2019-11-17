@@ -42,9 +42,7 @@ main (int argc, char **argv)
   for (int i = c; i < argc; i++)
     {
       if (strncasecmp ("str=", argv[i], 4) == 0)
-	{
-	  lcdWriteString (dev, 0, &argv[i][4]);
-	}
+	lcdWriteString (dev, 0, &argv[i][4]);
       else if (strcasecmp ("clear", argv[i]) == 0)
 	lcdClear (dev);
       else if (strcasecmp ("display=on", argv[i]) == 0)
@@ -57,6 +55,8 @@ main (int argc, char **argv)
 	lcdCursorOff (dev);
       else if (strcasecmp ("cursor=blink", argv[i]) == 0)
 	lcdCursorBlink (dev);
+      else if (strncasecmp ("line=", argv[i], 5) == 0)
+	lcdGotoLine (dev, atoi (&argv[i][5]));
       else
 	{
 	  fprintf (stderr, "Error: unknown argument: '%s'\n", argv[i]);

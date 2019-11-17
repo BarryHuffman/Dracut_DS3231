@@ -72,6 +72,12 @@ void lcdClose (int device);
 /* Clear the device. Cursor is moved to first line, first position */
 void lcdClear (int device);
 
+/* Move Cursor to begin of a line */
+void lcdGotoLine (int device, int line);
+
+/* Print character at current position */
+void lcdWriteChar (int device, char c);
+
 /* Write a string to the LCD device. The line can be in the range
    from 0-4, 0 means the new text is written from the current position,
    1-4 means it's written in that row. '\n' is converted to the correct

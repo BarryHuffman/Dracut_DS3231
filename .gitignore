@@ -8,6 +8,8 @@
 *.out
 .deps
 .libs
+*~
+*.bak
 Makefile
 Makefile.in
 m4
@@ -26,3 +28,4 @@ libtool
 ltmain.sh
 missing
 src/lcdcontrol
+src/lcdnetmon

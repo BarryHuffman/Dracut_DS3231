@@ -39,7 +39,8 @@ i2c_write_byte (int device, uint8_t data)
 
   byte[0] = data;
 
-  write (device, byte, sizeof(byte));
+  if (write (device, byte, sizeof(byte)) == -1)
+	perror ("write");
   /* Wait 1msec, needed by display to catch commands  */
   /* usleep (1000); */
 }
@@ -113,10 +114,10 @@ lcdSetup (uint8_t address, uint8_t busnum, int init)
 {
   char *devname;
   int device;
-  int32_t res;
   unsigned long funcs;
 
-  asprintf (&devname, "/dev/i2c-%i", busnum);
+  if (asprintf (&devname, "/dev/i2c-%i", busnum) == -1)
+    return -1;
   if (devname == NULL)
     return -1;
 
@@ -169,7 +170,7 @@ lcdClose(int device)
 }
 
 void
-lcdWriteString (int device, int line, char *str)
+lcdGotoLine (int device, int line)
 {
   switch (line)
     {
@@ -188,18 +189,24 @@ lcdWriteString (int device, int line, char *str)
     case 4:
       i2c_write (device, 0xD4);
       break;
-  default:
-    fprintf (stderr, "ERROR: line out of range: %i\n", line);
-    exit (1);
-  }
+    default:
+      fprintf (stderr, "ERROR: line out of range: %i\n", line);
+      exit (1);
+    }
+}
+
+void
+lcdWriteChar (int device, char c)
+{
+  i2c_write_mode (device, c, Rs, LCD_BACKLIGHT);
+}
+
+void
+lcdWriteString (int device, int line, char *str)
+{
+  lcdGotoLine (device, line);
 
   int i = 0;
   while (str[i])
-    {
-      if (str[i] == '\n')
-	i2c_write (device, 0xC0);
-      else
-	i2c_write_mode (device, str[i], Rs, LCD_BACKLIGHT);
-      i++;
-    }
+    lcdWriteChar (device, str[i++]);
 }
