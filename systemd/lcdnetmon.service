@@ -1,0 +1,10 @@
+[Unit]
+Description=Daemon to display IP Addresses on a LCD display
+After=local-fs.target
+
+[Service]
+Type=simple
+ExecStart=/usr/sbin/lcdnetmon
+
+[Install]
+WantedBy=multi-user.target
