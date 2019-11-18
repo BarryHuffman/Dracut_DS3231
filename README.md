@@ -1,9 +1,8 @@
-# rpi-lcd
-C-Library and Utility to program a LCD display via i2c on a Raspberry Pi
+# C-Library and Utilities to control a HD44780 LCD display on a Raspberry Pi.
 
 ## librpi-lcd
-librpi-lcd is a library with provide functions to control a LCD display
-connected via an i2c bus on a Raspberry Pi.
+librpi-lcd is a library which provides functions to control a HD44780 LCD
+display connected via an i2c bus on a Raspberry Pi.
 
 ## lcdcontrol
 This utility provides a command line interface to  manage the LCD display:
