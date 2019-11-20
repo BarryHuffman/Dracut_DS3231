@@ -52,6 +52,9 @@ output_iface_ip (int device, const char *iface,
 	  /* Filter out by interface name */
 	  if (strcmp(p->ifa_name, iface) != 0)
 	    continue;
+
+	  if (!(p->ifa_flags & IFF_RUNNING) || !(p->ifa_flags & IFF_UP))
+	    continue;
 	}
       else
 	{
@@ -189,6 +192,7 @@ watch_ifaddrs (int device)
 	{
 	  if (nlh->nlmsg_type == RTM_NEWADDR ||
 	      nlh->nlmsg_type == RTM_DELADDR ||
+	      nlh->nlmsg_type == RTM_NEWLINK ||
 	      nlh->nlmsg_type == RTM_DELLINK)
 	    print_lines (device);
 	  nlh = NLMSG_NEXT(nlh, len);
