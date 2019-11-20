@@ -17,6 +17,20 @@ LT_INIT([disable-static])
 PKG_PROG_PKG_CONFIG
 PKG_INSTALLDIR
 
+if test ${libexecdir} = '${exec_prefix}/libexec'
+then
+  libexecdir='${exec_prefix}/lib'
+  if test "${exec_prefix}" = "NONE"
+  then
+    SYSTEMDDIR=${prefix}/lib/systemd/system
+  else
+    SYSTEMDDIR=${exec_prefix}/lib/systemd/system
+  fi
+else
+  SYSTEMDDIR=${libexecdir}/systemd/system
+fi
+AC_SUBST(SYSTEMDDIR)
+
 dnl enable additional compiler checks
 AC_ARG_ENABLE([compiler-checks],
     AS_HELP_STRING([--enable-compiler-checks],[enables additional compiler checks, not for production]))
@@ -42,5 +56,6 @@ AC_SUBST(CFLAGS_CHECKS)
 AC_SUBST(LDFLAGS_CHECKS)
 AC_SUBST(CFLAGS_WARNINGS)
 AC_SUBST(LDFLAGS_WARNINGS)
-AC_CONFIG_FILES([Makefile lib/Makefile src/Makefile lib/librpi-lcd.pc])
+AC_CONFIG_FILES([Makefile lib/Makefile src/Makefile etc/Makefile \
+		 systemd/Makefile lib/librpi-lcd.pc])
 AC_OUTPUT

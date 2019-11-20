@@ -6,7 +6,9 @@ librpi_lcd_la_LDFLAGS = @LDFLAGS_CHECKS@ @CFLAGS_WARNINGS@ \
 	-version-info 0:0:0 -Wl,--no-undefined
 #	-Wl,--version-script=$(top_srcdir)/lib/librpi-lcd.map
 
+include_HEADERS = rpi-lcd.h
+
 CLEANFILES = *~
 DISTCLEANFILES = *.pc
-EXTRA_DIST = librpi-lcd.map
+#EXTRA_DIST = librpi-lcd.map
 pkgconfig_DATA = librpi-lcd.pc
