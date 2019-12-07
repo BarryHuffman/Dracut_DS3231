@@ -1,0 +1,13 @@
+[Unit]
+Description=Display booting message on LCD device
+DefaultDependencies=no
+Before=sysinit.target shutdown.target systemd-journald.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStartPre=modprobe i2c-dev
+ExecStart=/usr/bin/lcdcontrol init str="Booting..."
+
+[Install]
+WantedBy=sysinit.target
