@@ -29,3 +29,4 @@ ltmain.sh
 missing
 src/lcdcontrol
 src/lcdnetmon
+rpi-lcd-*.tar.*
