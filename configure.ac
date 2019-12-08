@@ -1,4 +1,4 @@
-AC_INIT([rpi-lcd], [0.1])
+AC_INIT([rpi-lcd], [0.2])
 AC_SUBST(PACKAGE)
 AC_SUBST(VERSION)
 
@@ -17,19 +17,16 @@ LT_INIT([disable-static])
 PKG_PROG_PKG_CONFIG
 PKG_INSTALLDIR
 
-if test ${libexecdir} = '${exec_prefix}/libexec'
+if test "${exec_prefix}" = "NONE"
 then
-  libexecdir='${exec_prefix}/lib'
-  if test "${exec_prefix}" = "NONE"
-  then
-    SYSTEMDDIR=${prefix}/lib/systemd/system
-  else
-    SYSTEMDDIR=${exec_prefix}/lib/systemd/system
-  fi
+  SYSTEMDDIR=${prefix}/lib/systemd/system
+  DRACUTDIR=${prefix}/lib/dracut
 else
-  SYSTEMDDIR=${libexecdir}/systemd/system
+  SYSTEMDDIR=${exec_prefix}/lib/systemd/system
+  DRACUTDIR=${exec_prefix}/lib/dracut
 fi
 AC_SUBST(SYSTEMDDIR)
+AC_SUBST(DRACUTDIR)
 
 dnl enable additional compiler checks
 AC_ARG_ENABLE([compiler-checks],
@@ -57,5 +54,5 @@ AC_SUBST(LDFLAGS_CHECKS)
 AC_SUBST(CFLAGS_WARNINGS)
 AC_SUBST(LDFLAGS_WARNINGS)
 AC_CONFIG_FILES([Makefile lib/Makefile src/Makefile etc/Makefile \
-		 systemd/Makefile lib/librpi-lcd.pc])
+		 systemd/Makefile dracut/Makefile lib/librpi-lcd.pc])
 AC_OUTPUT

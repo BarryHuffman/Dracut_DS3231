@@ -1,9 +1,9 @@
 AUTOMAKE_OPTIONS = 1.6 foreign dist-xz
 
-SUBDIRS = lib src etc systemd
+SUBDIRS = lib src etc systemd dracut
 
 ACLOCAL_AMFLAGS = -I m4
 
 CLEANFILES = *~
 
-EXTRA_DIST = COPYING.LIB README.md NEWS
+EXTRA_DIST = COPYING COPYING.LIB README.md NEWS
