@@ -190,7 +190,7 @@ lcdGotoLine (int device, int line)
       break;
     default:
       fprintf (stderr, "ERROR: line out of range: %i\n", line);
-      exit (1);
+      break;
     }
 }
 
