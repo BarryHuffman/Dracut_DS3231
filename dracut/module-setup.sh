@@ -16,7 +16,7 @@ install() {
     inst_multiple \
         /usr/bin/lcdcontrol \
         $systemdsystemunitdir/lcdbootmsg.service
-    mkdir -p "$initdir/$systemdsystemunitdir/systemd-journald.service.wants"
-    ln_r "$systemdsystemunitdir/lcdbootmsg.service" "$systemdsystemunitdir/systemd-journald.service.wants/lcdbootmsg.service"
+    mkdir -p "${initdir}/$systemdsystemunitdir/initrd.target.wants"
+    ln_r "$systemdsystemunitdir/lcdbootmsg.service" "$systemdsystemunitdir/initrd.target.wants/lcdbootmsg.service"
 }
 
