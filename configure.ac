@@ -19,10 +19,10 @@ PKG_INSTALLDIR
 
 if test "${exec_prefix}" = "NONE"
 then
-  SYSTEMDDIR=${prefix}/lib/systemd/system
+  SYSTEMDDIR=${prefix}/lib/systemd
   DRACUTDIR=${prefix}/lib/dracut
 else
-  SYSTEMDDIR=${exec_prefix}/lib/systemd/system
+  SYSTEMDDIR=${exec_prefix}/lib/systemd
   DRACUTDIR=${exec_prefix}/lib/dracut
 fi
 AC_SUBST(SYSTEMDDIR)

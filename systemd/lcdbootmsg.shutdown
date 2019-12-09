@@ -1,0 +1,3 @@
+#!/bin/sh
+
+/usr/bin/lcdcontrol init str="${1}..."
