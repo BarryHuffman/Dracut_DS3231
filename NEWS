@@ -1,3 +1,7 @@
+Version 0.3
+* Fix dependencies of lcdbootmsg in initrd
+* Add script to display shutdown message
+
 Version 0.2
 * Add dracut module for boot message
 
