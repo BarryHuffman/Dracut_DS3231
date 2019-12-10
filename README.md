@@ -54,10 +54,25 @@ change, too.
 
 ## Dracut modules for openSUSE/SUSE distributions
 
+### lcdbootmsg
+
+This dracut module contains a service file to print `Booting...` on
+the LCD display when entering the initrd. During shutdown, the 
+shutdown command will be printed.
+
+The following entries are required in `/boot/efi/extraconfig.txt`:
+```
+dtparam=i2c1=on
+dtparam=i2c_arm=on
+```
+
 ### rpi-rtc-ds3231
 
 This dracut modules provides a udev rule and necessary configuration files
 to set the system time during boot from the initrd by using a 
 ds3231 rtc module.
 
-
+The following entry is required in `/boot/efi/extraconfig.txt`:
+```
+dtoverlay=i2c-rtc,ds3231
+```
