@@ -1,3 +1,6 @@
+Version 0.4
+* Add dracut module to support ds3231 rtc
+
 Version 0.3
 * Fix dependencies of lcdbootmsg in initrd
 * Add script to display shutdown message

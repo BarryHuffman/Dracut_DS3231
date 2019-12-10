@@ -1,4 +1,4 @@
-AC_INIT([rpi-lcd], [0.3])
+AC_INIT([rpi-lcd], [0.4])
 AC_SUBST(PACKAGE)
 AC_SUBST(VERSION)
 
