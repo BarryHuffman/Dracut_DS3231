@@ -1,0 +1,1 @@
+ACTION=="add", SUBSYSTEM=="rtc", ATTRS{hctosys}=="0", RUN+="/usr/sbin/hwclock --hctosys --utc"
