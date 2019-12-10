@@ -12,6 +12,7 @@ depends() {
 
 # called by dracut
 install() {
+    hostonly="" instmods i2c-bcm2835
     inst /etc/adjtime
     inst /usr/sbin/hwclock
     mkdir -p "${initdir}${systemdsystemunitdir}/systemd-udevd.service.d/"

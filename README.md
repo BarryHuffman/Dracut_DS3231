@@ -51,3 +51,13 @@ lcdnetmon will print the following:
 
 If the IPv4 address of any of the interfaces changes, the output will
 change, too.
+
+## Dracut modules for openSUSE/SUSE distributions
+
+### rpi-rtc-ds3231
+
+This dracut modules provides a udev rule and necessary configuration files
+to set the system time during boot from the initrd by using a 
+ds3231 rtc module.
+
+
