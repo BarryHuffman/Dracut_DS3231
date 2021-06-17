@@ -1,5 +1,5 @@
 [Unit]
-Description=Display booting message on LCD device
+Description=Chrony daemon service
 DefaultDependencies=no
 After=systemd-udevd.service systemd-udev-trigger.service
 
@@ -7,4 +7,4 @@ After=systemd-udevd.service systemd-udev-trigger.service
 Type=oneshot
 RemainAfterExit=yes
 ExecStartPre=modprobe i2c-dev
-ExecStart=/usr/bin/lcdcontrol init str="Booting..."
+ExecStart=/usr/sbin/chronyd -rum4 -P 0 
