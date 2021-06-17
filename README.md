@@ -21,7 +21,7 @@ dtoverlay=i2c-rtc,ds3231
 
 ##Note:
 
-`timedatectl` needs to the process to be restarted for it to be aware of `chronyd` or `ntpd` changes to be reflected.
+`timedatectl` process must be restarted to reflect changes of `chronyd` or `ntpd`.
 
 File configuration or status changes should be followed by: 
 
