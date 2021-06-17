@@ -3,6 +3,8 @@
 
 This is not required if you have a consistent NTP uplink (LAN or WAN).
 
+Disable or remove "fake-hwclock" package before use.
+
 ## Included Dracut module for openSUSE/SUSE
 
 ### rpi-rtc-ds3231
