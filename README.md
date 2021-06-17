@@ -3,7 +3,7 @@
 
 This is not required if you have a consistent NTP uplink (LAN or WAN).
 
-Disable or remove "fake-hwclock" package before use.
+Disable or remove `fake-hwclock` package before use.
 
 ## Included Dracut module for openSUSE/SUSE
 
@@ -19,7 +19,7 @@ The following entry is required in
 dtoverlay=i2c-rtc,ds3231
 ```
 
-##Note:
+## Note:
 
 `timedatectl` process must be restarted to reflect changes of `chronyd` or `ntpd`.
 
