@@ -1,9 +1,0 @@
-AUTOMAKE_OPTIONS = 1.6 foreign dist-xz
-
-SUBDIRS = systemd dracut
-
-ACLOCAL_AMFLAGS = -I m4
-
-CLEANFILES = *~
-
-EXTRA_DIST = COPYING COPYING.LIB README.md Changelog
