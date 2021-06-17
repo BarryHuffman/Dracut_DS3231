@@ -1,0 +1,1 @@
+#Alternative clock source using openNTPd without influencing the RTC. 
